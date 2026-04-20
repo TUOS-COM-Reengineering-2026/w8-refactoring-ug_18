@@ -23,15 +23,19 @@ class CustomerManager:
     def add_purchases(self, name: str, purchases: List[Purchase]):
         self.add_customer(name, purchases)
 
+    def calculate_purchase_price(self, purchase):
+        if purchase['price'] > self.tax_threshold:
+            taxed_price = purchase['price'] * (1 + self.tax_rate)
+            calculated_price += taxed_price
+        else:
+            calculated_price += purchase['price']
+        return calculated_price
+
     def generate_report(self):
         for name, purchases in self.customers.items():
             calculated_price = 0
             for purchase in purchases:
-                if purchase['price'] > self.tax_threshold:
-                    taxed_price = purchase['price'] * (1 + self.tax_rate)
-                    calculated_price += taxed_price
-                else:
-                    calculated_price += purchase['price']
+                calculated_price += self.calculate_purchase_price(purchase)
             print(name)
             if calculated_price > self.discount_threshold:
                 print("Eligible for discount")
