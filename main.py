@@ -23,28 +23,37 @@ class CustomerManager:
     def add_purchases(self, name: str, purchases: List[Purchase]):
         self.add_customer(name, purchases)
 
-    def generate_report(self):
-        for name, purchases in self.customers.items():
-            calculated_price = 0
-            for purchase in purchases:
+    def calculate_price(self, purchases: List[Purchase]) -> float:
+        calculated_price = 0
+        for purchase in purchases:
                 if purchase['price'] > self.tax_threshold:
                     taxed_price = purchase['price'] * (1 + self.tax_rate)
                     calculated_price += taxed_price
                 else:
                     calculated_price += purchase['price']
+
+        return calculated_price
+
+    def discount_eligibility(self, price: float):
+        if price > self.discount_threshold:
+            print("Eligible for discount")
+        else:
+            if price > 300:
+                print("Potential future discount customer")
+            else:
+                print("No discount")
+        if price > 1000:
+            print("VIP Customer!")
+        else:
+            if price > 800:
+                print("Priority Customer")
+
+    def generate_report(self):
+        for name, purchases in self.customers.items():
+            calculated_price = self.calculate_price(purchases)
+
             print(name)
-            if calculated_price > self.discount_threshold:
-                print("Eligible for discount")
-            else:
-                if calculated_price > 300:
-                    print("Potential future discount customer")
-                else:
-                    print("No discount")
-            if calculated_price > 1000:
-                print("VIP Customer!")
-            else:
-                if calculated_price > 800:
-                    print("Priority Customer")
+            self.discount_eligibility(calculated_price)
 
     def calculate_shipping_fee(self, purchases: List[Purchase]):
         heavy_item = False
