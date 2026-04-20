@@ -24,6 +24,7 @@ class CustomerManager:
         self.add_customer(name, purchases)
 
     def calculate_purchase_price(self, purchase):
+        calculated_price = 0
         if purchase['price'] > self.tax_threshold:
             taxed_price = purchase['price'] * (1 + self.tax_rate)
             calculated_price += taxed_price
