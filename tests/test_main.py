@@ -101,5 +101,7 @@ class TestCustomerManager(unittest.TestCase):
         fee = calculate_shipping_fee_for_heavy_items(purchases)
         self.assertEqual(fee, 50)  
 
+
+    
 if __name__ == "__main__":
     unittest.main()
