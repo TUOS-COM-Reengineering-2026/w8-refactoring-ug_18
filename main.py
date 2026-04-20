@@ -1,20 +1,26 @@
+from typing import Dict, List, TypedDict
+
+class Purchase(TypedDict):
+    price: float
+    item: str
+
 class CustomerManager:
     def __init__(self):
-        self.customers = {}
+        self.customers: Dict[str, List[Purchase]] = {}
         self.tax_rate = 0.2
         self.tax_threshold = 100
         self.discount_threshold = 500
 
-    def add_customer(self, name, purchases):
+    def add_customer(self, name: str, purchases: List[Purchase]):
         if name in self.customers.keys():
             self.customers[name].extend(purchases)
         else:
             self.customers[name] = purchases
 
-    def add_purchase(self, name, purchase):
+    def add_purchase(self, name: str, purchase: Purchase):
         self.add_customer(name, [purchase])
 
-    def add_purchases(self, name, purchases):
+    def add_purchases(self, name: str, purchases: List[Purchase]):
         self.add_customer(name, purchases)
 
     def calculate_purchase_price(self, purchase):
@@ -44,7 +50,7 @@ class CustomerManager:
                 if calculated_price > 800:
                     print("Priority Customer")
 
-    def calculate_shipping_fee(self, purchases):
+    def calculate_shipping_fee(self, purchases: List[Purchase]):
         heavy_item = False
         for purchase in purchases:
             if purchase.get('weight', 0) > 20:
@@ -55,13 +61,13 @@ class CustomerManager:
         else:
             return 20
 
-def calculate_shipping_fee_for_heavy_items(purchases):
+def calculate_shipping_fee_for_heavy_items(purchases: List[Purchase]):
     for purchase in purchases:
         if purchase.get('weight', 0) > 20:
             return 50
     return 20
 
-def calculate_shipping_fee_for_fragile_items(purchases):
+def calculate_shipping_fee_for_fragile_items(purchases: List[Purchase]):
     fragile_item = False
     for purchase in purchases:
         if purchase.get('fragile', False):
@@ -72,4 +78,4 @@ def calculate_shipping_fee_for_fragile_items(purchases):
     else:
         return 25
 
-flat_tax = 0.2
+flat_tax = 0.2  # Not used
