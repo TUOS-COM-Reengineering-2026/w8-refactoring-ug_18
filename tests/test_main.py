@@ -101,7 +101,49 @@ class TestCustomerManager(unittest.TestCase):
         fee = calculate_shipping_fee_for_heavy_items(purchases)
         self.assertEqual(fee, 50)  
 
+    def test_generate_report_lt_tax_threshold(self):
+        cm = CustomerManager()
+        cm.add_customer("Bob", [{'price': 10}])
 
+        # Capture printed output
+        captured = io.StringIO()
+        with contextlib.redirect_stdout(captured):
+            cm.generate_report()
+
+        output = captured.getvalue()
+        
+    def test_generate_report_potential_future_customer(self):
+        cm = CustomerManager()
+        cm.add_customer("Bob", [{'price': 301}])
+
+        # Capture printed output
+        captured = io.StringIO()
+        with contextlib.redirect_stdout(captured):
+            cm.generate_report()
+
+        output = captured.getvalue()
+        
+    def test_generate_report_vip_customer(self):
+        cm = CustomerManager()
+        cm.add_customer("Bob", [{'price': 1001}])
+
+        # Capture printed output
+        captured = io.StringIO()
+        with contextlib.redirect_stdout(captured):
+            cm.generate_report()
+
+        output = captured.getvalue()
+        
+    def test_generate_report_priority_customer(self):
+        cm = CustomerManager()
+        cm.add_customer("Bob", [{'price': 801}])
+
+        # Capture printed output
+        captured = io.StringIO()
+        with contextlib.redirect_stdout(captured):
+            cm.generate_report()
+
+        output = captured.getvalue()
     
 if __name__ == "__main__":
     unittest.main()
