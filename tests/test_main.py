@@ -2,7 +2,7 @@ import unittest
 import io
 import contextlib
 
-from main import CustomerManager, calculate_shipping_fee_for_fragile_items
+from main import CustomerManager, calculate_shipping_fee_for_fragile_items, calculate_shipping_fee_for_heavy_items
 
 class TestCustomerManager(unittest.TestCase):
 
@@ -76,6 +76,30 @@ class TestCustomerManager(unittest.TestCase):
 
         fee_fragile = calculate_shipping_fee_for_fragile_items(purchases)
         self.assertEqual(fee_fragile, 25)
+        
+    def test_add_purchases(self):
+        cm = CustomerManager()
+        name = "Alice"
+        purchases = [{'price': 50, 'item': 'banana'}, {'price': 80, 'item': 'apple'}]
+        
+        cm.add_purchases(name, purchases)
+        
+        self.assertEqual(
+            {name: purchases},
+            cm.customers
+        )
+        
+    def test_calculate_shipping_fee_for_heavy_items_20(self):
+        purchases = [{'price': 50, 'item': 'banana'}, {'price': 80, 'item': 'apple'}]
+        
+        fee = calculate_shipping_fee_for_heavy_items(purchases)
+        self.assertEqual(fee, 20)
+        
+    def test_calculate_shipping_fee_for_heavy_items_50(self):
+        purchases = [{'price': 50, 'item': 'banana', 'weight': 100}, {'price': 80, 'item': 'apple', 'weight': 100}]
+        
+        fee = calculate_shipping_fee_for_heavy_items(purchases)
+        self.assertEqual(fee, 50)  
 
 if __name__ == "__main__":
     unittest.main()
