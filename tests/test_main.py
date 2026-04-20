@@ -110,7 +110,7 @@ class TestCustomerManager(unittest.TestCase):
         with contextlib.redirect_stdout(captured):
             cm.generate_report()
 
-        output = captured.getvalue()
+        captured.getvalue()
         
     def test_generate_report_potential_future_customer(self):
         cm = CustomerManager()
@@ -121,7 +121,7 @@ class TestCustomerManager(unittest.TestCase):
         with contextlib.redirect_stdout(captured):
             cm.generate_report()
 
-        output = captured.getvalue()
+        captured.getvalue()
         
     def test_generate_report_vip_customer(self):
         cm = CustomerManager()
@@ -132,7 +132,7 @@ class TestCustomerManager(unittest.TestCase):
         with contextlib.redirect_stdout(captured):
             cm.generate_report()
 
-        output = captured.getvalue()
+        captured.getvalue()
         
     def test_generate_report_priority_customer(self):
         cm = CustomerManager()
@@ -143,7 +143,7 @@ class TestCustomerManager(unittest.TestCase):
         with contextlib.redirect_stdout(captured):
             cm.generate_report()
 
-        output = captured.getvalue()
+        captured.getvalue()
     
 if __name__ == "__main__":
     unittest.main()
