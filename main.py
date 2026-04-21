@@ -3,6 +3,8 @@ from typing import Dict, List, TypedDict
 class Purchase(TypedDict):
     price: float
     item: str   
+    weight: int
+    fragile: bool
 
 class CustomerManager:
     def __init__(self):
