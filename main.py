@@ -39,7 +39,7 @@ class CustomerManager:
 
     def discount_eligibility(self, price: float):
         
-        eligible = price > self.discount_eligibility
+        eligible = price > self.discount_threshold
         
         if eligible:
             print("Eligible for discount")
