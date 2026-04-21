@@ -35,18 +35,21 @@ class CustomerManager:
         return calculated_price
 
     def discount_eligibility(self, price: float):
-        if price > self.discount_threshold:
+        
+        eligible = price > self.discount_eligibility
+        
+        if eligible:
             print("Eligible for discount")
         else:
             if price > 300:
                 print("Potential future discount customer")
             else:
                 print("No discount")
+        
         if price > 1000:
             print("VIP Customer!")
-        else:
-            if price > 800:
-                print("Priority Customer")
+        elif price > 800:
+            print("Priority Customer")
 
     def generate_report(self):
         for name, purchases in self.customers.items():
