@@ -2,7 +2,7 @@ from typing import Dict, List, TypedDict
 
 class Purchase(TypedDict):
     price: float
-    item: str
+    item: str   
 
 class CustomerManager:
     def __init__(self):
@@ -26,11 +26,12 @@ class CustomerManager:
     def calculate_price(self, purchases: List[Purchase]) -> float:
         calculated_price = 0
         for purchase in purchases:
-                if purchase['price'] > self.tax_threshold:
-                    taxed_price = purchase['price'] * (1 + self.tax_rate)
-                    calculated_price += taxed_price
-                else:
-                    calculated_price += purchase['price']
+            price_more_than_text_threshold = purchase['price'] > self.tax_threshold
+            if price_more_than_text_threshold:
+                taxed_price = purchase['price'] * (1 + self.tax_rate)
+                calculated_price += taxed_price
+            else:
+                calculated_price += purchase['price']
 
         return calculated_price
 
