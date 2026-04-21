@@ -60,30 +60,14 @@ class CustomerManager:
             print(name)
             self.discount_eligibility(calculated_price)
 
-    def calculate_shipping_fee(self, purchases: List[Purchase]):
-        heavy_item = False
-        for purchase in purchases:
-            if purchase.get('weight', 0) > 20:
-                heavy_item = True
-                break
-        if heavy_item:
-            return 50
-        else:
-            return 20
-
-    def calculate_shipping_fee_for_heavy_items(purchases: List[Purchase]):
+    def calculate_shipping_fee_for_heavy_items(self, purchases: List[Purchase]):
         for purchase in purchases:
             if purchase.get('weight', 0) > 20:
                 return 50
         return 20
 
-    def calculate_shipping_fee_for_fragile_items(purchases: List[Purchase]):
-        fragile_item = False
+    def calculate_shipping_fee_for_fragile_items(self, purchases: List[Purchase]):
         for purchase in purchases:
             if purchase.get('fragile', False):
-                fragile_item = True
-                break
-        if fragile_item:
-            return 60
-        else:
-            return 25
+                return 60
+        return 25

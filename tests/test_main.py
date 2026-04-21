@@ -2,7 +2,7 @@ import unittest
 import io
 import contextlib
 
-from main import CustomerManager, calculate_shipping_fee_for_fragile_items, calculate_shipping_fee_for_heavy_items
+from main import CustomerManager
 
 class TestCustomerManager(unittest.TestCase):
 
@@ -58,23 +58,24 @@ class TestCustomerManager(unittest.TestCase):
         cm = CustomerManager()
         purchases = [{'price': 100, 'weight': 25}]
 
-        fee = cm.calculate_shipping_fee(purchases)
+        fee = cm.calculate_shipping_fee_for_heavy_items(purchases)
         self.assertEqual(fee, 50)
 
     def test_fragile_item_shipping_fee(self):
+        cm = CustomerManager()
         purchases = [{'price': 70, 'fragile': True}]
 
-        fee = calculate_shipping_fee_for_fragile_items(purchases)
+        fee = cm.calculate_shipping_fee_for_fragile_items(purchases)
         self.assertEqual(fee, 60)
 
     def test_no_special_items_shipping_fee(self):
         cm = CustomerManager()
         purchases = [{'price': 40, 'weight': 5, 'fragile': False}]
 
-        fee = cm.calculate_shipping_fee(purchases)
+        fee = cm.calculate_shipping_fee_for_heavy_items(purchases)
         self.assertEqual(fee, 20)
 
-        fee_fragile = calculate_shipping_fee_for_fragile_items(purchases)
+        fee_fragile = cm.calculate_shipping_fee_for_fragile_items(purchases)
         self.assertEqual(fee_fragile, 25)
         
     def test_add_purchases(self):
@@ -90,15 +91,17 @@ class TestCustomerManager(unittest.TestCase):
         )
         
     def test_calculate_shipping_fee_for_heavy_items_20(self):
+        cm = CustomerManager()
         purchases = [{'price': 50, 'item': 'banana'}, {'price': 80, 'item': 'apple'}]
         
-        fee = calculate_shipping_fee_for_heavy_items(purchases)
+        fee = cm.calculate_shipping_fee_for_heavy_items(purchases)
         self.assertEqual(fee, 20)
         
     def test_calculate_shipping_fee_for_heavy_items_50(self):
+        cm = CustomerManager()
         purchases = [{'price': 50, 'item': 'banana', 'weight': 100}, {'price': 80, 'item': 'apple', 'weight': 100}]
         
-        fee = calculate_shipping_fee_for_heavy_items(purchases)
+        fee = cm.calculate_shipping_fee_for_heavy_items(purchases)
         self.assertEqual(fee, 50)  
 
     def test_generate_report_lt_tax_threshold(self):
