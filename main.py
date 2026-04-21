@@ -3,6 +3,8 @@ from typing import Dict, List, TypedDict
 class Purchase(TypedDict):
     price: float
     item: str
+    weight: int
+    fragile: bool
 
 class CustomerManager:
     def __init__(self):
@@ -78,5 +80,3 @@ def calculate_shipping_fee_for_fragile_items(purchases: List[Purchase]):
         return 60
     else:
         return 25
-
-flat_tax = 0.2  # Not used
